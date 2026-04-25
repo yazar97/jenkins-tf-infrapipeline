@@ -1,6 +1,6 @@
 project_id = "deft-ellipse-472905-s4"
 region     = "us-central1"
-env        = "dev"
+
 
 vpc_name   = "vpciii-dev"
 /*
