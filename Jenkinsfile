@@ -18,15 +18,7 @@ pipeline {
     githubPush()
   }
 
-  // -------------------------
-  // OPTIONS
-  // -------------------------
-  options {
-    buildDiscarder(logRotator(numToKeepStr:'30'))
-    timeout(time: 1, unit: 'HOURS')
-    ansiColor('xterm')
-    disableConcurrentBuilds()
-  }
+
 
   // -------------------------
   // PARAMETERS
