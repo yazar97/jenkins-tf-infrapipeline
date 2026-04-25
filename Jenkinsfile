@@ -138,6 +138,7 @@ pipeline {
     // PROD APPROVAL
     // -------------------------
     stage('Approval') {
+      agent none   // 🔥 VERY IMPORTANT
       when {
         expression { env.BRANCH_NAME == 'prod' }
       }
