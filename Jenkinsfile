@@ -87,6 +87,7 @@ pipeline {
     // -------------------------
     // TERRAFORM INIT
     // -------------------------
+  
     stage('Terraform Init') {
       steps {
         dir("${TF_WORKDIR}") {
@@ -153,7 +154,7 @@ pipeline {
         dir("${TF_WORKDIR}") {
           script {
 
-           if (env.GIT_BRANCH.contains("dev")) {
+           if (env.GIT_BRANCH.contains("prod")) {
              if (fileExists('tfplan')) {
 
                 sh "terraform apply tfplan"
