@@ -90,7 +90,10 @@ pipeline {
     stage('Terraform Init') {
       steps {
         dir("${TF_WORKDIR}") {
-          sh 'terraform init -reconfigure -backend-config=backend.config'
+          sh """
+            rm -rf .terraform .terraform.lock.hcl
+            terraform init -reconfigure -backend-config=backend.config
+          """
         }
       }
     }
