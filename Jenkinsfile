@@ -153,26 +153,28 @@ pipeline {
         dir("${TF_WORKDIR}") {
           script {
 
-            if (env.GIT_BRANCH.contains("dev")) {
+           if (env.GIT_BRANCH.contains("dev")) {
+             if (fileExists('tfplan')) {
 
-              catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+               def approval = input(
+                 message: "Apply Terraform?",
+                  ok: "Proceed",
+                  parameters: []
+               )
 
-                if (fileExists('tfplan')) {
-                  input "Apply Terraform?"
-                  sh "terraform apply tfplan"
-                } else {
-                  echo "No tfplan found"
-                }
+                sh "terraform apply tfplan"
 
-              }
+              } else {
+                echo "No tfplan found"
+             }
 
-            } else {
-              echo "No Master - cicd running on ${env.GIT_BRANCH}"
-            }
+           } else {
+             echo "Skipping apply - not dev branch"
+           }
 
           }
         }
-      }
+     }
     }
 
     // -------------------------
