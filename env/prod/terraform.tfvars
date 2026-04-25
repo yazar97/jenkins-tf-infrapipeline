@@ -2,7 +2,7 @@ project_id = "project-a5e7c97d-cc48-4a23-940"
 region     = "us-central1"
 
 
-vpc_name   = "vpciii-dev"
+vpc_name   = "vpciii-prod"
 /*
 subnets = {
   subnet1 = {
