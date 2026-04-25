@@ -153,7 +153,7 @@ pipeline {
         dir("${TF_WORKDIR}") {
           script {
 
-            if (env.GIT_BRANCH == "origin/dev") {
+            if (env.GIT_BRANCH.contains("dev")) {
 
               catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 
