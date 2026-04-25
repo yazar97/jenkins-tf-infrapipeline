@@ -156,12 +156,6 @@ pipeline {
            if (env.GIT_BRANCH.contains("dev")) {
              if (fileExists('tfplan')) {
 
-               def approval = input(
-                 message: "Apply Terraform?",
-                  ok: "Proceed",
-                  parameters: []
-               )
-
                 sh "terraform apply tfplan"
 
               } else {
