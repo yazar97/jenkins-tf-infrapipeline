@@ -3,7 +3,7 @@ region     = "us-central1"
 env        = "dev"
 
 vpc_name   = "vpciii-dev"
-
+/*
 subnets = {
   subnet1 = {
     name   = "subnet-dev-1"
@@ -12,3 +12,5 @@ subnets = {
   }
  
 }
+
+*/
