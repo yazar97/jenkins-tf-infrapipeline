@@ -154,20 +154,22 @@ pipeline {
           script {
 
            if (env.GIT_BRANCH.contains("dev")) {
+             if (fileExists('tfplan')) {
 
-              catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+               def approval = input(
+                 message: "Apply Terraform?",
+                  ok: "Proceed",
+                  parameters: []
+               )
 
-               if (fileExists('tfplan')) {
-                 echo "Applying Terraform automatically..."
-                  sh "terraform apply -auto-approve tfplan"
-                } else {
-              echo "No tfplan found"
-               }
+                sh "terraform apply tfplan"
 
-              }
+              } else {
+                echo "No tfplan found"
+             }
 
            } else {
-          echo "Skipping apply - not dev branch"
+             echo "Skipping apply - not dev branch"
            }
 
           }
@@ -175,7 +177,30 @@ pipeline {
      }
     }
 
-  
+    // -------------------------
+    // DESTROY
+    // -------------------------
+    stage('Terraform Destroy') {
+      when {
+        expression { params.tf_destroy == 'true' }
+      }
+      steps {
+        dir("${TF_WORKDIR}") {
+          script {
+
+            if (env.GIT_BRANCH == "origin/master") {
+              input "Confirm destroy?"
+              sh "terraform destroy -auto-approve"
+            } else {
+              echo "Destroy skipped - not on master"
+            }
+
+          }
+        }
+      }
+    }
+  }
+
   // -------------------------
   // POST ACTIONS
   // -------------------------
