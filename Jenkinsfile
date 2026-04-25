@@ -74,9 +74,14 @@ pipeline {
     stage('Terrascan') {
       steps {
         dir("${TF_WORKDIR}") {
-          sh 'terrascan scan -t terraform'
-        }
-      }
+          sh '''
+            terrascan scan \
+              -i terraform \
+              -d . \
+              --non-recursive
+         '''
+       }
+     }
     }
 
     // -------------------------
